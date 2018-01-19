@@ -5,8 +5,6 @@
 <title>
 </title>  
 <link type="text/css" rel="stylesheet" href="homecss.css" />
-    
-
 </head>
 <body>
 
@@ -16,8 +14,7 @@
 <ul class="nav">
 <li><a href="">Menu</a></li>
 <li><a href="">Reservations</a></li>
-<li id="center"><a href="">Login</a></li>
-<li id="myBtn"><a href="">Signup</a></li>
+<li id="center"><a>Login</a></li>
 <li class="icon">
     <a onclick="myFunction()">☰</a>
   </li>
@@ -35,6 +32,7 @@ window.onscroll = function(){
         
         
         nav.style.background = "#8B4513";
+        nav.style.boxShadow = "0px 8px 16px 0px rgba(0,0,0,0.4)";
         
     }
     else{
@@ -68,6 +66,41 @@ window.onclick = function(event) {
     
     
 <div id="myModal" class="modal">
+<?php
+
+$conn = new mysqli('localhost','root','','restaurant_db');
+
+if ($conn->connect_error) {
+    
+  echo "Error";  
+}
+
+ if(isset($_POST['first']) && !empty($_POST['first']) AND isset($_POST['last']) && !empty($_POST['last']) AND isset($_POST['email']) && !empty($_POST['email']) AND isset($_POST['tel']) && !empty($_POST['tel']) AND isset($_POST['pass']) && !empty($_POST['pass']))
+ 
+ {
+     
+     $fname = mysql_escape_string($_POST['first']);
+     $lname = mysql_escape_string($_POST['last']);
+     $email = mysql_escape_string($_POST['email']);
+     $tel = mysql_escape_string($_POST['tel']);
+     $pass = mysql_escape_string($_POST['pass']);
+     
+    
+     $hash = md5( rand(0,1000) );
+     
+     
+$query = "INSERT INTO customer_details (Firstname, Lastname, Email, Tel, Password, hash) VALUES(
+'". mysql_escape_string($fname) ."', 
+'". mysql_escape_string(md5($lname)) ."', 
+'". mysql_escape_string($email) ."',
+'". mysql_escape_string($tel) ."',
+'". mysql_escape_string($pass) ."', 
+'". mysql_escape_string($hash) ."')";
+     
+$check = $conn -> query($query);
+     
+}
+?>
 
   <!-- Modal content -->
   <div class="modal-content">
@@ -76,29 +109,29 @@ window.onclick = function(event) {
       <center><h2 style="color: #8B4513;font-family:'AlexBrush-Regular';">Please fill the form below</h2></center>
       <hr class="hr">
     </div>
-    <div class="modal-body">
-    <form>
+    <div class="Modal-body">
+    <form method="post" action="">
     <div class="form-group">
     <label for="Firstname">FirstName :</label><br> 
-    <input type="text" id="fn" class="input" placeholder="Enter Firstname" autofocus/><br> 
+    <input type="text" id="fn" name="first" class="input" placeholder="Enter Firstname" autofocus/><br> 
     </div>
     <div class="form-group">
     <label for="Lastname">LastName :</label><br> 
-    <input type="text" id="ln" class="input" placeholder="Enter Lastname" /><br> 
+    <input type="text" id="ln" name="last" class="input" placeholder="Enter Lastname" /><br> 
     </div>
     <div class="form-group">
     <label for="Email">Email :</label> <br>
-    <input type="email" id="em" class="input" placeholder="Enter Email" /><br> 
+    <input type="email" id="em" name="email" class="input" placeholder="Enter Email" /><br> 
     </div>
     <div class="form-group">
     <label for="Tel">Tel :</label> <br>
-    <input type="text" id="tel" class="input" placeholder="Enter number" /><br> 
+    <input type="text" id="tel" name="tel" class="input" placeholder="Enter number" /><br> 
     </div>
     <div class="form-group">
     <label for="Password">Password:</label> <br>
-    <input type="password" id="pw" class="input" placeholder="Enter Password" /><br>
+    <input type="password" id="pw" name="pass" class="input" placeholder="Enter Password" /><br>
     </div>
-    <center><input id="submit" type="submit" value="Submit" name="submit" /></center>
+    <center><input id="sub" type="submit" value="Submit" name="submit" /></center>
      </form>
     </div>
     <div class="modal-footer">
@@ -120,11 +153,11 @@ window.onclick = function(event) {
     <form>
     <div class="form-group">
     <label for="Email">Email :</label> <br>
-    <input type="email" id="em" class="input" placeholder="Enter Email" autofocus/><br> 
+    <input type="email" id="em1" class="input" placeholder="Enter Email" autofocus/><br> 
     </div>
     <div class="form-group">
     <label for="Password">Password:</label> <br>
-    <input type="password" id="pw" class="input" placeholder="Enter Password" /><br>
+    <input type="password" id="pw1" class="input" placeholder="Enter Password" /><br>
     </div>
     <center><input id="submit" type="submit" value="Login" name="submit" /></center>
      </form>
@@ -139,18 +172,11 @@ window.onclick = function(event) {
     
 <div id="mid2" >
     
-<div class='mid3' id="mid3">
-<h1 class="tag">Reserve Table.</h1>
+<div class='mid3'>
+<h1 class="tag">Reserve Table & Order online.</h1>
 <hr class="hr">
-<p class="p">You can save time and reduce stress by making <span class="tag">reservations</span> online anywhere and everywhere.</p>    
-    <center><button class="con"><span>Reserve</span></button></center>
-</div>
-
-<div class='mid3' id="dish">
-    <h1 class="tag">Order Online.</h1>
-    <hr class="hr">
-    <p class="p">Choose from a wide variety of meals from our well crafted <span class="tag">menu</span> containing delicious delicacies.</p>
-    <center><button class="con"><span>Order</span></button></center>
+<hr class="hr">
+<p id="p1">You can save time and reduce stress by making <span class="tag">reservations</span> online anywhere and everywhere.Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. </p>    
 </div>
 </div>
     
@@ -159,29 +185,20 @@ window.onclick = function(event) {
 <div class="parallax">
 <br>
 <br>
+<br>
+<br>
+    
 <div id="mid4">
     <center><h1 class="tag">Create a personalized feel.</h1></center>
     <hr id="hr1">
     <p class="p">You get to signup and create a profile where you can save your favorite order,enjoy discounts and receive information about any promotions the restaurant advertises.</p>
-    <center><button class="myBtn">SignUp</button></center>
+    <center><button id="myBtn" class="con"><span>SignUp</span></button></center>
 </div>
+ <br>
+ <br>
  <br>
 <br>   
  </div>   
-<div id="mid">
-    
-<div class="mid1">
-<img id="img" src="images/p2.jpg" />
-</div>
-    
-<div id="mid1" class="mid1">
-<h1 id="chef" class="tag">Meet the Chef.</h1>
-<hr id="hr">
-<p id="p" class="p">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure 
-</p>
-</div>
-    
-</div>
 
 
 </div>
@@ -190,10 +207,12 @@ window.onclick = function(event) {
 // Get the modal
 var modal = document.getElementById('myModal');
 var modala = document.getElementById('Modal');
+var mod = document.getElementById('mod');
 
 // Get the button that opens the modal
 var btn = document.getElementById("myBtn");
 var btna = document.getElementById("center");
+var sub = document.getElementById("submit");
 
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
@@ -214,6 +233,9 @@ spana.onclick = function() {
 btna.onclick = function() {
     modala.style.display = "block";
 }
+sub.onclick = function() {
+    mod.style.display = "block";
+}
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
     if (event.target == modal || event.target == modala) {
@@ -226,14 +248,13 @@ window.onclick = function(event) {
 
 <center>
 <footer id="footer">
-<hr>
 <div id="get">
 <p class="par">Tel: 212-555-1212</p>
 <p class="par">Email: info@catnet.com</p>
 <p class="par">&copy 2017 CatNet. All Rights Reserved. Sitemap</p>
 </div >   
 </footer>
-    </center>
+</center>
     
 </body>
 
